@@ -14,7 +14,7 @@ const NavBar = () => {
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/profile", label: "Profile" },
-    // { href: "/middleware", label: "Protected Area" },
+    { href: "/aboutme", label: "About Me" },
     // { href: "/auth-protected", label: "Member Access" },
     // { href: "/api/data", label: "API", target: "_blank" }
   ];
