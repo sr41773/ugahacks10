@@ -1,7 +1,15 @@
 "use client";
 
-import React, { useState } from 'react';
-import { Play, Pause, SkipBack, SkipForward, Heart, Volume2 } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import {
+  Play,
+  Pause,
+  SkipBack,
+  SkipForward,
+  Heart,
+  Volume2,
+} from "lucide-react";
+import { playSound, pauseSound, playNextSound } from "../../mp3/sleep.js";
 
 const MusicPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -9,11 +17,23 @@ const MusicPlayer = () => {
   const [progress, setProgress] = useState(30); // Current progress in percentage
 
   const togglePlay = () => {
+    console.log("inside toggle play");
+    if (isPlaying) {
+      pauseSound();
+    } else {
+      playSound();
+    }
     setIsPlaying(!isPlaying);
   };
 
   const toggleLike = () => {
     setIsLiked(!isLiked);
+  };
+
+  const skipForward = () => {
+    console.log("inside skip forward");
+    playNextSound();
+    setIsPlaying(true);
   };
 
   return (
@@ -22,27 +42,30 @@ const MusicPlayer = () => {
         <div className="bg-white rounded-2xl shadow-xl p-8">
           {/* Album Art */}
           <div className="aspect-square mb-8 rounded-xl overflow-hidden bg-[#DDE5B6] relative group">
-            <img 
+            <img
               src="/api/placeholder/400/400"
               alt="Album Cover"
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-              <button 
-                onClick={togglePlay}
+              <button
+                // onClick={togglePlay}
                 className="w-20 h-20 rounded-full bg-[#ADC178] flex items-center justify-center text-white hover:bg-[#6C584C] transition-colors"
               >
-                {isPlaying ? 
-                  <Pause className="w-10 h-10" /> : 
+                {isPlaying ? (
+                  <Pause className="w-10 h-10" />
+                ) : (
                   <Play className="w-10 h-10 ml-1" />
-                }
+                )}
               </button>
             </div>
           </div>
 
           {/* Song Info */}
           <div className="text-center mb-8">
-            <h2 className="text-2xl font-bold text-[#6C584C] mb-2">Relaxing Melody</h2>
+            <h2 className="text-2xl font-bold text-[#6C584C] mb-2">
+              Relaxing Melody
+            </h2>
             <p className="text-[#A98467]">Peaceful Tunes</p>
           </div>
 
@@ -70,7 +93,7 @@ const MusicPlayer = () => {
           {/* Progress Bar */}
           <div className="mb-6">
             <div className="h-1 bg-[#DDE5B6] rounded-full">
-              <div 
+              <div
                 className="h-full bg-[#ADC178] rounded-full"
                 style={{ width: `${progress}%` }}
               ></div>
@@ -83,35 +106,35 @@ const MusicPlayer = () => {
 
           {/* Controls */}
           <div className="flex items-center justify-between mb-8">
-            <button 
+            <button
               onClick={toggleLike}
               className={`p-2 rounded-full hover:bg-[#DDE5B6]/50 transition-colors ${
-                isLiked ? 'text-[#ADC178]' : 'text-[#A98467]'
+                isLiked ? "text-[#ADC178]" : "text-[#A98467]"
               }`}
             >
-              <Heart className={`w-6 h-6 ${isLiked ? 'fill-current' : ''}`} />
+              <Heart className={`w-6 h-6 ${isLiked ? "fill-current" : ""}`} />
             </button>
-
             <div className="flex items-center gap-4">
               <button className="p-2 text-[#6C584C] hover:text-[#ADC178] transition-colors">
                 <SkipBack className="w-8 h-8" />
               </button>
-
-              <button 
+              <button
                 onClick={togglePlay}
                 className="w-16 h-16 rounded-full bg-[#ADC178] flex items-center justify-center text-white hover:bg-[#6C584C] transition-colors"
               >
-                {isPlaying ? 
-                  <Pause className="w-8 h-8" /> : 
+                {isPlaying ? (
+                  <Pause className="w-8 h-8" />
+                ) : (
                   <Play className="w-8 h-8 ml-1" />
-                }
+                )}
               </button>
-
-              <button className="p-2 text-[#6C584C] hover:text-[#ADC178] transition-colors">
+              <button
+                onClick={skipForward}
+                className="p-2 text-[#6C584C] hover:text-[#ADC178] transition-colors"
+              >
                 <SkipForward className="w-8 h-8" />
               </button>
             </div>
-
             <button className="p-2 text-[#A98467] hover:bg-[#DDE5B6]/50 rounded-full transition-colors">
               <Volume2 className="w-6 h-6" />
             </button>
