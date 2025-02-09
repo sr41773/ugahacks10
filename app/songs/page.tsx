@@ -1,27 +1,21 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  Play,
-  Pause,
-  SkipBack,
-  SkipForward,
-  Heart,
-  Volume2,
-} from "lucide-react";
+import { Play, Pause, SkipBack, SkipForward, Heart, Volume2 } from "lucide-react";
 import { playSound, pauseSound, playNextSound } from "../../mp3/sleep.js";
 
 const MusicPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
-  const [progress, setProgress] = useState(30); // Current progress in percentage
+  const [progress, setProgress] = useState(0); // Progress in percentage
+  const [duration, setDuration] = useState(0); // Total duration of the track
+  const [currentTime, setCurrentTime] = useState(0); // Current time of the audio playback
 
   const togglePlay = () => {
-    console.log("inside toggle play");
     if (isPlaying) {
       pauseSound();
     } else {
-      playSound();
+      playSound(setProgress, setDuration, setCurrentTime);
     }
     setIsPlaying(!isPlaying);
   };
@@ -31,10 +25,20 @@ const MusicPlayer = () => {
   };
 
   const skipForward = () => {
-    console.log("inside skip forward");
-    playNextSound();
+    playNextSound(setProgress, setDuration, setCurrentTime);
     setIsPlaying(true);
   };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (isPlaying) {
+        const currentProgress = (currentTime / duration) * 100;
+        setProgress(currentProgress);
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [isPlaying, currentTime, duration]);
 
   return (
     <div className="min-h-screen bg-[#F0EAD2] py-12 px-4">
@@ -49,7 +53,6 @@ const MusicPlayer = () => {
             />
             <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
               <button
-                // onClick={togglePlay}
                 className="w-20 h-20 rounded-full bg-[#ADC178] flex items-center justify-center text-white hover:bg-[#6C584C] transition-colors"
               >
                 {isPlaying ? (
@@ -63,15 +66,16 @@ const MusicPlayer = () => {
 
           {/* Song Info */}
           <div className="text-center mb-8">
-            <h2 className="text-2xl font-bold text-[#6C584C] mb-2">
-              Relaxing Melody
-            </h2>
+            <h2 className="text-2xl font-bold text-[#6C584C] mb-2">Relaxing Melody</h2>
             <p className="text-[#A98467]">Peaceful Tunes</p>
           </div>
 
           {/* Wave Animation */}
           {isPlaying && (
-            <div className="siri-wave mb-6">
+            <div className="siri-wave mb-14">
+              <div className="siri-wave-bar"></div>
+              <div className="siri-wave-bar"></div>
+              <div className="siri-wave-bar"></div>
               <div className="siri-wave-bar"></div>
               <div className="siri-wave-bar"></div>
               <div className="siri-wave-bar"></div>
@@ -99,8 +103,8 @@ const MusicPlayer = () => {
               ></div>
             </div>
             <div className="flex justify-between mt-2 text-sm text-[#A98467]">
-              <span>1:30</span>
-              <span>3:45</span>
+              <span>{formatTime(currentTime)}</span>
+              <span>{formatTime(duration)}</span>
             </div>
           </div>
 
@@ -108,9 +112,7 @@ const MusicPlayer = () => {
           <div className="flex items-center justify-between mb-8">
             <button
               onClick={toggleLike}
-              className={`p-2 rounded-full hover:bg-[#DDE5B6]/50 transition-colors ${
-                isLiked ? "text-[#ADC178]" : "text-[#A98467]"
-              }`}
+              className={`p-2 rounded-full hover:bg-[#DDE5B6]/50 transition-colors ${isLiked ? "text-[#ADC178]" : "text-[#A98467]"}`}
             >
               <Heart className={`w-6 h-6 ${isLiked ? "fill-current" : ""}`} />
             </button>
@@ -151,6 +153,12 @@ const MusicPlayer = () => {
       </div>
     </div>
   );
+};
+
+const formatTime = (time) => {
+  const minutes = Math.floor(time / 60);
+  const seconds = Math.floor(time % 60);
+  return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
 };
 
 export default MusicPlayer;
