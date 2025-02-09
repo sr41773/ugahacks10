@@ -10,6 +10,11 @@ const MusicPlayer = () => {
 
   const togglePlay = () => {
     setIsPlaying(!isPlaying);
+    if(isPlaying == true) {
+      
+    } else{
+
+    }
   };
 
   const toggleLike = () => {
