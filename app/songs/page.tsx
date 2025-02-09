@@ -44,7 +44,9 @@ const MusicPlayer = () => {
     <div className="min-h-screen bg-[#F0EAD2] py-12 px-4">
       <div className="max-w-2xl mx-auto">
         <div className="bg-white rounded-2xl shadow-xl p-8">
-          {/* Album Art */}
+
+
+        
           <div className="aspect-square mb-8 rounded-xl overflow-hidden bg-[#DDE5B6] relative group">
             <img
               src="/api/placeholder/400/400"
@@ -64,18 +66,17 @@ const MusicPlayer = () => {
             </div>
           </div>
 
-          {/* Song Info */}
+          
+
           <div className="text-center mb-8">
             <h2 className="text-2xl font-bold text-[#6C584C] mb-2">Relaxing Melody</h2>
             <p className="text-[#A98467]">Peaceful Tunes</p>
           </div>
 
-          {/* Wave Animation */}
+          
+
           {isPlaying && (
             <div className="siri-wave mb-14">
-              <div className="siri-wave-bar"></div>
-              <div className="siri-wave-bar"></div>
-              <div className="siri-wave-bar"></div>
               <div className="siri-wave-bar"></div>
               <div className="siri-wave-bar"></div>
               <div className="siri-wave-bar"></div>
@@ -94,7 +95,8 @@ const MusicPlayer = () => {
             </div>
           )}
 
-          {/* Progress Bar */}
+          
+
           <div className="mb-6">
             <div className="h-1 bg-[#DDE5B6] rounded-full">
               <div
@@ -108,7 +110,8 @@ const MusicPlayer = () => {
             </div>
           </div>
 
-          {/* Controls */}
+        
+
           <div className="flex items-center justify-between mb-8">
             <button
               onClick={toggleLike}
