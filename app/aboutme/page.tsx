@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { Save, Music, AlertCircle } from 'lucide-react';
+import { useRouter } from 'next/navigation'; // Add this import
 
 const chronicConditions = [
   { id: 'insomnia', label: 'Insomnia' },
@@ -20,6 +21,7 @@ const temporaryConditions = [
 ];
 
 export default function IllnessPage() {
+  const router = useRouter(); // Add this hook
   const { user } = useUser();
   const [personalInfo, setPersonalInfo] = useState({
     age: '',
@@ -78,7 +80,11 @@ export default function IllnessPage() {
     localStorage.setItem('temporaryConditions', JSON.stringify(selectedTemporary));
     
     setSaveStatus('Saved successfully!');
-    setTimeout(() => setSaveStatus(''), 3000);
+    
+    // Navigate to songs page after a brief delay to show the save status
+    setTimeout(() => {
+      router.push('/songs');
+    }, 1000);
   };
 
   return (
