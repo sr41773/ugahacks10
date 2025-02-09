@@ -46,14 +46,14 @@ const NavBar = () => {
             <div className="relative overflow-hidden rounded-full border-2 border-[#DDE5B6] shadow-md hover:shadow-lg transition-shadow bg-white/10 backdrop-blur-sm p-1">
               <Image
                 src={logoimage}
-                alt="Medeli Logo"
+                alt="Medelli Logo"
                 className="h-10 w-10 transform hover:scale-105 transition-transform duration-300"
                 width={40}
                 height={40}
               />
             </div>
             <div className="ml-3">
-              <span className="text-[#F0EAD2] font-bold text-xl hidden sm:block">Medeli</span>
+              <span className="text-[#F0EAD2] font-bold text-xl hidden sm:block">MedElly</span>
             </div>
           </div>
 

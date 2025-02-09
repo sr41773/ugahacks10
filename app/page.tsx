@@ -22,7 +22,7 @@ export default async function Home() {
       <div className="max-w-6xl mx-auto px-4 py-16">
         <div className="text-center mb-16">
           <h1 className="text-5xl font-bold text-[#6C584C] mb-4">
-            Medical Medely
+            Medical MedElly
           </h1>
           <p className="text-xl text-[#A98467]">Your Wellness Journey Through Music</p>
         </div>

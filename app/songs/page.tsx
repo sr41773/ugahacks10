@@ -47,25 +47,7 @@ const MusicPlayer = () => {
 
 
         
-          <div className="aspect-square mb-8 rounded-xl overflow-hidden bg-[#DDE5B6] relative group">
-            <img
-              src="/api/placeholder/400/400"
-              alt="Album Cover"
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-              <button
-                className="w-20 h-20 rounded-full bg-[#ADC178] flex items-center justify-center text-white hover:bg-[#6C584C] transition-colors"
-              >
-                {isPlaying ? (
-                  <Pause className="w-10 h-10" />
-                ) : (
-                  <Play className="w-10 h-10 ml-1" />
-                )}
-              </button>
-            </div>
-          </div>
-
+        
           
 
           <div className="text-center mb-8">
