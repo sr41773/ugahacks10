@@ -14,8 +14,13 @@ const NavBar = () => {
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/profile", label: "Profile" },
+<<<<<<< HEAD
     { href: "/aboutme", label: "Preferances" },
     { href: "/songs", label: "Songs" },
+=======
+    { href: "/aboutme", label: "Preferences" },
+    // { href: "/auth-protected", label: "Member Access" },
+>>>>>>> c5fa20400c2ecd12de2c61ba1fb5dd04a0abfe41
     // { href: "/api/data", label: "API", target: "_blank" }
   ];
 

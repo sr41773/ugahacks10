@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 // File: /Users/a16787/ugahacksx/ugahacks10/app/profile/page.tsx
+=======
+// File: C:\Nandu\UGA HACKS\UGAHACKSX10\ugahacks10\app\profile\page.tsx
+>>>>>>> c5fa20400c2ecd12de2c61ba1fb5dd04a0abfe41
 import * as entry from '../../../../app/profile/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
