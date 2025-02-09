@@ -1,4 +1,4 @@
-"use client"; 
+"use client";
 
 // In components/ProfileDetails.tsx
 import React, { useEffect, useState } from 'react';
