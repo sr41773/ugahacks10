@@ -10,11 +10,6 @@ const MusicPlayer = () => {
 
   const togglePlay = () => {
     setIsPlaying(!isPlaying);
-    if(isPlaying == true) {
-      
-    } else{
-
-    }
   };
 
   const toggleLike = () => {
@@ -51,6 +46,27 @@ const MusicPlayer = () => {
             <p className="text-[#A98467]">Peaceful Tunes</p>
           </div>
 
+          {/* Wave Animation */}
+          {isPlaying && (
+            <div className="siri-wave mb-6">
+              <div className="siri-wave-bar"></div>
+              <div className="siri-wave-bar"></div>
+              <div className="siri-wave-bar"></div>
+              <div className="siri-wave-bar"></div>
+              <div className="siri-wave-bar"></div>
+              <div className="siri-wave-bar"></div>
+              <div className="siri-wave-bar"></div>
+              <div className="siri-wave-bar"></div>
+              <div className="siri-wave-bar"></div>
+              <div className="siri-wave-bar"></div>
+              <div className="siri-wave-bar"></div>
+              <div className="siri-wave-bar"></div>
+              <div className="siri-wave-bar"></div>
+              <div className="siri-wave-bar"></div>
+              <div className="siri-wave-bar"></div>
+            </div>
+          )}
+
           {/* Progress Bar */}
           <div className="mb-6">
             <div className="h-1 bg-[#DDE5B6] rounded-full">
@@ -75,12 +91,12 @@ const MusicPlayer = () => {
             >
               <Heart className={`w-6 h-6 ${isLiked ? 'fill-current' : ''}`} />
             </button>
-            
+
             <div className="flex items-center gap-4">
               <button className="p-2 text-[#6C584C] hover:text-[#ADC178] transition-colors">
                 <SkipBack className="w-8 h-8" />
               </button>
-              
+
               <button 
                 onClick={togglePlay}
                 className="w-16 h-16 rounded-full bg-[#ADC178] flex items-center justify-center text-white hover:bg-[#6C584C] transition-colors"
@@ -90,12 +106,12 @@ const MusicPlayer = () => {
                   <Play className="w-8 h-8 ml-1" />
                 }
               </button>
-              
+
               <button className="p-2 text-[#6C584C] hover:text-[#ADC178] transition-colors">
                 <SkipForward className="w-8 h-8" />
               </button>
             </div>
-            
+
             <button className="p-2 text-[#A98467] hover:bg-[#DDE5B6]/50 rounded-full transition-colors">
               <Volume2 className="w-6 h-6" />
             </button>
