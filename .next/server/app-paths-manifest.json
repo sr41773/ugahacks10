@@ -1,4 +1,6 @@
 {
   "/page": "app/page.js",
+  "/aboutme/page": "app/aboutme/page.js",
+  "/profile/page": "app/profile/page.js",
   "/api/auth/[auth0]/route": "app/api/auth/[auth0]/route.js"
 }
