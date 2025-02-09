@@ -1,44 +1,44 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { useUser } from '@auth0/nextjs-auth0/client';
-import { Save, Music, AlertCircle } from 'lucide-react';
-import { useRouter } from 'next/navigation'; // Add this import
+import React, { useState, useEffect } from "react";
+import { useUser } from "@auth0/nextjs-auth0/client";
+import { Save, Music, AlertCircle } from "lucide-react";
+import { useRouter } from "next/navigation"; // Add this import
 
 const chronicConditions = [
-  { id: 'insomnia', label: 'Insomnia' },
-  { id: 'depression', label: 'Depression' },
-  { id: 'bodyPain', label: 'Chronic Body Pain' },
-  { id: 'anxiety', label: 'Chronic Anxiety' },
-  { id: 'dementia', label: 'Dementia/Alzheimer\'s' }
+  { id: "insomnia", label: "Insomnia" },
+  { id: "depression", label: "Depression" },
+  { id: "bodyPain", label: "Chronic Body Pain" },
+  { id: "anxiety", label: "Chronic Anxiety" },
+  { id: "dementia", label: "Dementia/Alzheimer's" },
 ];
 
 const temporaryConditions = [
-  { id: 'tempSleep', label: 'Temporary Sleep Issues' },
-  { id: 'stress', label: 'Stress' },
-  { id: 'surgeryStress', label: 'Pre/Post Surgery Stress' },
-  { id: 'tempPain', label: 'Temporary Pain' }
+  { id: "tempSleep", label: "Temporary Sleep Issues" },
+  { id: "stress", label: "Stress" },
+  { id: "surgeryStress", label: "Pre/Post Surgery Stress" },
+  { id: "tempPain", label: "Temporary Pain" },
 ];
 
 export default function IllnessPage() {
   const router = useRouter(); // Add this hook
   const { user } = useUser();
   const [personalInfo, setPersonalInfo] = useState({
-    age: '',
-    birthYear: '',
-    name: '',
-    country: ''
+    age: "",
+    birthYear: "",
+    name: "",
+    country: "",
   });
   const [selectedChronic, setSelectedChronic] = useState<string[]>([]);
   const [selectedTemporary, setSelectedTemporary] = useState<string[]>([]);
-  const [saveStatus, setSaveStatus] = useState('');
+  const [saveStatus, setSaveStatus] = useState("");
 
   useEffect(() => {
     // Load saved selections from localStorage when component mounts
     const loadSavedSelections = () => {
-      const savedPersonalInfo = localStorage.getItem('personalInfo');
-      const savedChronic = localStorage.getItem('chronicConditions');
-      const savedTemporary = localStorage.getItem('temporaryConditions');
+      const savedPersonalInfo = localStorage.getItem("personalInfo");
+      const savedChronic = localStorage.getItem("chronicConditions");
+      const savedTemporary = localStorage.getItem("temporaryConditions");
 
       if (savedPersonalInfo) setPersonalInfo(JSON.parse(savedPersonalInfo));
       if (savedChronic) setSelectedChronic(JSON.parse(savedChronic));
@@ -49,41 +49,67 @@ export default function IllnessPage() {
   }, []);
 
   const handlePersonalInfoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPersonalInfo(prev => ({
+    setPersonalInfo((prev) => ({
       ...prev,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     }));
   };
 
   const handleChronicToggle = (conditionId: string) => {
-    setSelectedChronic(prev =>
+    setSelectedChronic((prev) =>
       prev.includes(conditionId)
-        ? prev.filter(id => id !== conditionId)
+        ? prev.filter((id) => id !== conditionId)
         : [...prev, conditionId]
     );
   };
 
   const handleTemporaryToggle = (conditionId: string) => {
-    setSelectedTemporary(prev =>
+    setSelectedTemporary((prev) =>
       prev.includes(conditionId)
-        ? prev.filter(id => id !== conditionId)
+        ? prev.filter((id) => id !== conditionId)
         : [...prev, conditionId]
     );
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Save to localStorage
-    localStorage.setItem('personalInfo', JSON.stringify(personalInfo));
-    localStorage.setItem('chronicConditions', JSON.stringify(selectedChronic));
-    localStorage.setItem('temporaryConditions', JSON.stringify(selectedTemporary));
-    
-    setSaveStatus('Saved successfully!');
-    
-    // Navigate to songs page after a brief delay to show the save status
+    localStorage.setItem("personalInfo", JSON.stringify(personalInfo));
+    localStorage.setItem("chronicConditions", JSON.stringify(selectedChronic));
+    localStorage.setItem(
+      "temporaryConditions",
+      JSON.stringify(selectedTemporary)
+    );
+
+    setSaveStatus("Saved successfully!");
+
+    // Determine the route based on the selected condition
+    let route = "/songs"; // Default route
+
+    if (selectedChronic.includes("dementia")) {
+      route = "/dementia-songs";
+    } else if (selectedChronic.includes("depression")) {
+      route = "/depress-songs";
+    } else route = "/songs";
+     /* else if (selectedChronic.includes("bodyPain")) {
+      route = "/body-songs";
+    } else if (selectedChronic.includes("insomnia")) {
+      route = "/insomnia-songs";
+    } else if (selectedChronic.includes("tempSleep")) {
+      route = "/sleep-songs";
+    } else if (selectedChronic.includes("tempPain")) {
+      route = "/pain-songs";
+    } else if (selectedChronic.includes("stress")) {
+      route = "/stress-songs";
+    } else if (selectedChronic.includes("surgeryStress")) {
+      route = "/surgery-songs"; 
+    } */
+      
+
+    // Navigate to the determined route after a brief delay to show the save status
     setTimeout(() => {
-      router.push('/songs');
+      router.push(route);
     }, 1000);
   };
 
@@ -99,7 +125,9 @@ export default function IllnessPage() {
           <form onSubmit={handleSubmit} className="space-y-8">
             {/* Personal Information */}
             <div className="bg-[#DDE5B6]/20 rounded-xl p-6">
-              <h2 className="text-xl font-semibold text-[#6C584C] mb-4">Personal Information</h2>
+              <h2 className="text-xl font-semibold text-[#6C584C] mb-4">
+                Personal Information
+              </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-[#A98467] mb-1">Name</label>
@@ -122,7 +150,9 @@ export default function IllnessPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-[#A98467] mb-1">Year of Birth</label>
+                  <label className="block text-[#A98467] mb-1">
+                    Year of Birth
+                  </label>
                   <input
                     type="number"
                     name="birthYear"
@@ -132,7 +162,9 @@ export default function IllnessPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-[#A98467] mb-1">Country of Origin</label>
+                  <label className="block text-[#A98467] mb-1">
+                    Country of Origin
+                  </label>
                   <input
                     type="text"
                     name="country"
@@ -146,9 +178,11 @@ export default function IllnessPage() {
 
             {/* Chronic Conditions */}
             <div className="bg-[#DDE5B6]/20 rounded-xl p-6">
-              <h2 className="text-xl font-semibold text-[#6C584C] mb-4">Chronic Conditions</h2>
+              <h2 className="text-xl font-semibold text-[#6C584C] mb-4">
+                Chronic Conditions
+              </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {chronicConditions.map(condition => (
+                {chronicConditions.map((condition) => (
                   <label
                     key={condition.id}
                     className="flex items-center space-x-3 p-3 rounded-lg border border-[#ADC178] cursor-pointer hover:bg-[#ADC178]/10"
@@ -167,9 +201,11 @@ export default function IllnessPage() {
 
             {/* Temporary Conditions */}
             <div className="bg-[#DDE5B6]/20 rounded-xl p-6">
-              <h2 className="text-xl font-semibold text-[#6C584C] mb-4">Temporary Conditions</h2>
+              <h2 className="text-xl font-semibold text-[#6C584C] mb-4">
+                Temporary Conditions
+              </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {temporaryConditions.map(condition => (
+                {temporaryConditions.map((condition) => (
                   <label
                     key={condition.id}
                     className="flex items-center space-x-3 p-3 rounded-lg border border-[#ADC178] cursor-pointer hover:bg-[#ADC178]/10"
