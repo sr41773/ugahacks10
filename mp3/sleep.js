@@ -10,51 +10,61 @@ let currentIndex = 0;
 let sound = new Howl({
   src: [playlist[currentIndex]],
   html5: true,
-  onplay: function () {
-    console.log("Sound started playing.");
+  onload: function () {
     const duration = sound.duration();
-    setDuration(duration); // Set duration when audio starts
+    setDuration(duration); // Set the duration once the sound is fully loaded
+  },
+  onplay: function () {
+    playSound(setProgress, setDuration, setCurrentTime); // Start playing the sound
   },
   onseek: function () {
     const currentTime = sound.seek();
-    setCurrentTime(currentTime); // Update currentTime
+    setCurrentTime(currentTime); // Update current time whenever it's updated
   },
   onend: function () {
-    console.log("Audio ended");
-    playNextSound(setProgress, setDuration, setCurrentTime);
+    playNextSound(setProgress, setDuration, setCurrentTime); // Go to next sound once current track ends
   },
 });
 
 export const playSound = (setProgress, setDuration, setCurrentTime) => {
-  console.log("playSound function called");
-  sound.play();
+  
+  // If the sound is already playing, do not reload it
+  if (!sound.playing()) {
+    sound.play();
+  }
+  
   setInterval(() => {
     const currentProgress = sound.seek() / sound.duration() * 100;
     setProgress(currentProgress);
-    setCurrentTime(sound.seek()); // Update currentTime
+    setCurrentTime(sound.seek()); // Update currentTime every second
   }, 1000);
 };
 
 export const pauseSound = () => {
-  console.log("pauseSound function called");
   sound.pause();
 };
 
 export const playNextSound = (setProgress, setDuration, setCurrentTime) => {
-  console.log("playNextSound function called");
+
   sound.stop();
   currentIndex = (currentIndex + 1) % playlist.length;
+
+  // Reload the next sound
   sound = new Howl({
     src: [playlist[currentIndex]],
     html5: true,
-    onplay: function () {
+    onload: function () {
       const duration = sound.duration();
-      setDuration(duration); // Set duration for the next track
+      setDuration(duration); // Set the duration when new sound is loaded
     },
     onseek: function () {
       const currentTime = sound.seek();
-      setCurrentTime(currentTime); // Update currentTime
+      setCurrentTime(currentTime); // Update current time
+    },
+    onend: function () {
+      playNextSound(setProgress, setDuration, setCurrentTime);
     },
   });
+
   sound.play();
 };
