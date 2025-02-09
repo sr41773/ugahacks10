@@ -4,6 +4,7 @@ import ProfileClient from "./components/user-client";
 import ProfileServer from "./components/user-server";
 import { redirect } from "next/navigation";
 import { Music, Heart, Clock, Calendar, BadgeCheck, Timer } from 'lucide-react';
+import ProfileDetails from '@/components/ProfileDetails';
 
 const Profile = async () => {
   const session = await getSession();
@@ -95,6 +96,11 @@ const Profile = async () => {
               </div>
             </div>
           </div>
+
+          // In your Profile page
+<div className="bg-[#DDE5B6]/20 rounded-lg p-4 mb-4">
+  <ProfileDetails />
+</div>
 
           <div className="bg-white rounded-xl shadow-md p-6">
             <h2 className="text-2xl font-semibold text-[#6C584C] mb-6 flex items-center gap-2">
